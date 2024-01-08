@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "library_store::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-library_store-Debug-d482ea32505afd550aad.json",
+					"jsonFile" : "target-library_store-Debug-5c90d2b47e3588180462.json",
 					"name" : "library_store",
 					"projectIndex" : 0
 				}
@@ -49,7 +49,7 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/Uni/CST2550/CST2550/library-store/cmake-build-debug",
+		"build" : "D:/Uni/CST2550/CST2550/library-store/cmake-build-mingw",
 		"source" : "D:/Uni/CST2550/CST2550/library-store"
 	},
 	"version" : 

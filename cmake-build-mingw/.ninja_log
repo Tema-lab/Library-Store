@@ -1,0 +1,6 @@
+# ninja log v5
+10	101	7264476338173836	CMakeFiles/library_store.dir/person.cpp.obj	b95f4ed80e0d949d
+13	107	7264476338233652	CMakeFiles/library_store.dir/member.cpp.obj	9e4e8658464ff4b9
+16	111	7264476338283518	CMakeFiles/library_store.dir/librarian.cpp.obj	d65587602659f94b
+0	322	7264476340386543	CMakeFiles/library_store.dir/main.cpp.obj	a812533bf53058d3
+323	421	7264476341345873	library_store.exe	bd9ecfc0625ff853
