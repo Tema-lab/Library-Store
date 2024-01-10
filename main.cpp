@@ -2,11 +2,11 @@
 #include <string>
 #include <limits>
 #include <fstream>
+#include "person.h"
+#include "book.h"
 #include "librarian.h"
 #include "member.h"
 
-
-int MEMBER_ID = 1000;
 
 bool askToContinue() {
     char userInput;
@@ -29,12 +29,6 @@ bool askToContinue() {
         }
     }
 }
-void print_member_details(const Member& member) {
-    std::cout << "Member ID: " << member.get_member_id() << std::endl;
-    std::cout << "Name: " << member.getName() << std::endl;
-    std::cout << "Address: " << member.getAddress() << std::endl;
-    std::cout << "Email: " << member.getEmail() << std::endl;
-}
 
 int main() {
     if(askToContinue()){
@@ -46,7 +40,7 @@ int main() {
         std::ifstream input_file(filename);
 
         if(input_file.is_open()){
-            Librarian librarian(113,"temoid","portnall road","nowayamgs78@gmail.com",85000);
+
             char choice;
             std::cout << "File " << filename << " was found and can be read. " << std::endl;
 
@@ -60,32 +54,9 @@ int main() {
 
             switch (choice) {
                 case '1':
-                    int id;
-                    std::string name;
-                    std::string address;
-                    std::string email;
-
-                    std::cout << "Add member option was chosen." << std::endl;
-                    std::cout << "Please enter member's name: ";
-                    std::getline(std::cin, name);
-                    std::cout << "Please enter member's address: ";
-                    std::getline(std::cin, address);
-                    std::cout << "Please enter member's email: ";
-                    std::getline(std::cin, email);
-
-                    Member member(MEMBER_ID,name,address,email);
-                    librarian.add_member(member);
-
-                    std::cout << "New member was added: " << std::endl;
-                    print_member_details(member);
-
-                    MEMBER_ID += 1;
-
+                    librarian.add_member();
                     break;
-
             }
-
-
         }else{
             std::cout << "Error! File " << filename << " was not found and can be read. " << std::endl;
         }

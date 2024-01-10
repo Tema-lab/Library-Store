@@ -14,8 +14,9 @@ public:
     int get_member_id() const;
     std::vector<Book> get_books_borrowed();
     void set_books_borrowed(const std::vector<Book>& books);
-    std::vector<Member>& get_list_of_members();
+    static std::vector<Member>& get_list_of_members();
 };
+
 
 
 #endif //LIBRARY_STORE_MEMBER_H

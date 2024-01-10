@@ -10,7 +10,7 @@ private:
     int salary;
 public:
     Librarian(int staff_id,std::string name,std::string address,std::string email,int salary);
-    void add_member(Member &new_member);
+    void add_member();
     void issue_book(int member_id, int book_id);
     void return_book(int member_id,int book_id);
     void display_borrowed_books(int member_id);
@@ -19,7 +19,10 @@ public:
     int get_salary();
     void set_staff_id(int staff_id);
     void set_salary(int salary);
+    void print_member_details(int member_id);
+
 };
 
+extern Librarian librarian;
 
 #endif //LIBRARY_STORE_LIBRARIAN_H

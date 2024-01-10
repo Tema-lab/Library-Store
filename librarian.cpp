@@ -1,5 +1,10 @@
+#include <iostream>
+#include <string>
+#include <limits>
 #include "librarian.h"
 #include "member.h"
+#include <vector>
+int MEMBER_ID = 1000;
 
 Librarian::Librarian(int staff_id, std::string name, std::string address, std::string email, int salary) {
     this->staff_id = staff_id;
@@ -8,11 +13,46 @@ Librarian::Librarian(int staff_id, std::string name, std::string address, std::s
     this->setEmail(email);
     this->salary = salary;
 };
+Librarian librarian(113,"temoid","portnall road","nowayamgs78@gmail.com",85000);
 // adding member to a vector that holds all members
-void Librarian::add_member(Member &new_member) {
-    new_member.get_list_of_members().push_back(new_member);
+void Librarian::add_member() {
+    std::string name;
+    std::string address;
+    std::string email;
+
+    std::cout << "Add member option was chosen." << std::endl;
+    std::cout << "Please enter member's name: ";
+    std::getline(std::cin, name);
+    std::cout << "Please enter member's address: ";
+    std::getline(std::cin, address);
+    std::cout << "Please enter member's email: ";
+    std::getline(std::cin, email);
+
+    Member member(MEMBER_ID,name,address,email);
+
+    std::cout << "New member was added: " << std::endl;
+
+    Member::get_list_of_members().push_back(member);
+    Librarian::print_member_details(MEMBER_ID);
+    MEMBER_ID += 1;
 };
 
+void Librarian::print_member_details(int member_id) {
+    const std::vector<Member> &member_list = get_list_of_members();
+
+
+    for (const Member& member : member_list){
+        if(member.get_member_id() == member_id){
+                std::cout << "Member ID: " << member.get_member_id() << std::endl;
+                std::cout << "Name: " << member.getName() << std::endl;
+                std::cout << "Address: " << member.getAddress() << std::endl;
+                std::cout << "Email: " << member.getEmail() << std::endl;
+                return;
+        }
+    }
+    std::cout << "Member with id " << member_id << " was not found." << std::endl;
+
+}
 
 
 void Librarian::issue_book(int member_id, int book_id) {};
