@@ -43,26 +43,28 @@ int main() {
 
             char choice;
             std::cout << "File " << filename << " was found and can be read. " << std::endl;
+            while(true){
+                std::cout << "Please choose one of the available options below: " << std::endl;
+                std::cout << "Add Member (1) " << std::endl;
+                std::cout << "Manage Book (2)" << std::endl;
+                std::cout << "Display All Books (3)" << std::endl;
+                std::cout << "End Session (4)" << std::endl;
+                std::cin >> choice;
+                std::cin.ignore();
 
-            std::cout << "Please choose one of the available options below: " << std::endl;
-            std::cout << "Add Member (1) " << std::endl;
-            std::cout << "Manage Book (2)" << std::endl;
-            std::cout << "Display All Books (3)" << std::endl;
-            std::cout << "End Session (4)" << std::endl;
-            std::cin >> choice;
-            std::cin.ignore();
-
-            switch (choice) {
-                case '1':
-                    librarian.add_member();
-                    break;
+                switch (choice) {
+                    case '4':
+                        std::cout << "System Exiting" << std::endl;
+                        exit(0);
+                        break;
+                    case '1':
+                        librarian.add_member();
+                        break;
+                }
             }
         }else{
             std::cout << "Error! File " << filename << " was not found and can be read. " << std::endl;
         }
-
-
-
     }else{
         std::cout << "Program stopped. " << std::endl;
     }

@@ -4,6 +4,8 @@
 #include "person.h"
 #include "member.h"
 
+class Member;
+
 class Librarian : public Person{
 private:
     int staff_id;

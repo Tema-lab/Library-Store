@@ -1,6 +1,6 @@
+#include "person.h"
 #include "member.h"
 #include "book.h"
-
 
  Member::Member(int member_id, std::string name, std::string address, std::string email) {
     this->member_id = member_id;
