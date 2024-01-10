@@ -1,5 +1,5 @@
 #include "librarian.h"
-
+#include "member.h"
 
 Librarian::Librarian(int staff_id, std::string name, std::string address, std::string email, int salary) {
     this->staff_id = staff_id;
@@ -8,8 +8,12 @@ Librarian::Librarian(int staff_id, std::string name, std::string address, std::s
     this->setEmail(email);
     this->salary = salary;
 };
+// adding member to a vector that holds all members
+void Librarian::add_member(Member &new_member) {
+    new_member.get_list_of_members().push_back(new_member);
+};
 
-void Librarian::add_member() {};
+
 
 void Librarian::issue_book(int member_id, int book_id) {};
 
@@ -18,7 +22,6 @@ void Librarian::return_book(int member_id, int book_id) {};
 void Librarian::display_borrowed_books(int member_id) {};
 
 void Librarian::calc_fine(int member_id) {};
-
 
 
 int Librarian::get_staff_id() {

@@ -3,6 +3,8 @@
 
 #include <ctime>
 #include <string>
+
+// Forward declaration to fix any circular dependencies, causing compiling errors.
 class Member;
 
 class Book {

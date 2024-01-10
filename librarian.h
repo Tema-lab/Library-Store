@@ -2,6 +2,7 @@
 #define LIBRARY_STORE_LIBRARIAN_H
 
 #include "person.h"
+#include "member.h"
 
 class Librarian : public Person{
 private:
@@ -9,7 +10,7 @@ private:
     int salary;
 public:
     Librarian(int staff_id,std::string name,std::string address,std::string email,int salary);
-    void add_member();
+    void add_member(Member &new_member);
     void issue_book(int member_id, int book_id);
     void return_book(int member_id,int book_id);
     void display_borrowed_books(int member_id);
