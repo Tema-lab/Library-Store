@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-
+//vector to store all Book objects
 std::vector<Book> Book::books;
 
 Book::Book(int book_id, std::string book_name, std::string author_first_name, std::string author_last_name) {
@@ -12,25 +12,31 @@ Book::Book(int book_id, std::string book_name, std::string author_first_name, st
     this->author_last_name = author_last_name;
 };
 
+// Getter function to get the book ID
 std::string Book::get_book_id() const{
     return std::to_string(book_id);
 };
 
+// Getter function to get the book name
 std::string Book::get_book_name() const{
     return book_name;
 };
 
+// Getter function to get the author's first name
 std::string Book::get_author_first_name() const{
     return author_first_name;
 };
 
+// Getter function to get the author's last name
 std::string Book::get_author_last_name() const{
     return author_last_name;
 };
-
+// Getter function to retrieve the list of all books
 std::vector<Book>& Book::get_list_of_books(){
     return books;
 }
+
+// Function to print details of all books in the static vector
 void Book::print_all_books() {
     std::cout << "List of Books:\n";
     for (const auto& book : get_list_of_books()) {
@@ -41,26 +47,23 @@ void Book::print_all_books() {
     }
 }
 
-bool Book::is_book_issued(Book &book) {
-    return book.is_issued;
-}
-
-void Book::set_book_issued(Book &book) {
-    if(book.is_book_issued(book)){
-        is_issued = true;
-    }
-}
-
+// Getter function to get the due date of the book
 std::time_t Book::get_due_date(){
     return due_date;
 };
 
+// Setter function to update the due date of the book
 void Book::set_due_date(std::time_t new_due_date){
     this->due_date = new_due_date;
 };
 
-void Book::return_book() {};
+// Function to simulate the return of a book
+void Book::return_book(int book_id,int member_id) {
+    std::cout << "Book with ID: " << book_id << " was successfully returned to a member with ID: " << member_id << std::endl;
+    std::cout << "\n[---------Returning to menu---------";
+};
 
+// Function to simulate the borrowing of a book by a member
 void Book::borrow_book(Member* borrower, std::time_t due_date) {
     this->borrower = borrower;
     set_due_date(due_date);

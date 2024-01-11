@@ -17,4 +17,4 @@ book.o: book.cpp book.h
 	g++ -c book.cpp
 
 clean:
-	del *.o output
+	rm *.o output

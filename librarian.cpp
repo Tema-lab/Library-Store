@@ -7,8 +7,9 @@
 #include "librarian.h"
 #include "member.h"
 #include "book.h"
-
 #include <vector>
+
+// Global variable for member ID
 int MEMBER_ID = 1000;
 
 Librarian::Librarian(int staff_id, std::string name, std::string address, std::string email, int salary) {
@@ -21,7 +22,7 @@ Librarian::Librarian(int staff_id, std::string name, std::string address, std::s
 
 Librarian librarian(113,"temoid","portnall road","nowayamgs78@gmail.com",85000);
 
-// adding member to a vector that holds all members
+// Function to add a member to the library
 void Librarian::add_member() {
     std::string name;
     std::string address;
@@ -33,6 +34,8 @@ void Librarian::add_member() {
     std::getline(std::cin, name);
     std::cout << "Please enter member's address: ";
     std::getline(std::cin, address);
+
+    // Validate and obtain a valid email address
     do {
         std::cout << "Please enter member's email: ";
         std::getline(std::cin, email);
@@ -42,18 +45,18 @@ void Librarian::add_member() {
         }
     } while (!std::regex_match(email, emailRegex));
 
-
+    // Create a new Member object and add it to the list of members
     Member member(MEMBER_ID,name,address,email);
+    Member::get_list_of_members().push_back(member);
 
     std::cout << "New member was added: " << std::endl;
-
-    Member::get_list_of_members().push_back(member);
     print_member_details(MEMBER_ID);
 
     MEMBER_ID += 1;
     std::cout << "Return to main menu..."<< std::endl;
 };
 
+// Function to print details of a member with a given ID
 void Librarian::print_member_details(int member_id) {
     const std::vector<Member> &member_list = Member::get_list_of_members();
     for (const Member& member : member_list){
@@ -68,6 +71,7 @@ void Librarian::print_member_details(int member_id) {
     std::cout << "Member with id " << member_id << " was not found." << std::endl;
 }
 
+// Function to manage book-related operations
 void Librarian::manageBook() {
     int member_id;
     int book_id;
@@ -79,7 +83,6 @@ void Librarian::manageBook() {
 
     switch (choice) {
         case '1':
-            // Get member_id and book_id from the user and pass them to issue_book
             std::cout << "Please enter a member id: " << std::endl;
             std::cin >> member_id;
             std::cout << "Please enter a book id: " << std::endl;
@@ -89,7 +92,6 @@ void Librarian::manageBook() {
 
         case '2':
             std::cout << "Return a book option was chosen." << std::endl;
-            // Get member_id and book_id from the user and pass them to issue_book
             std::cout << "Please enter a member id: " << std::endl;
             std::cin >> member_id;
             std::cout << "Please enter a book id that you wish to return: " << std::endl;
@@ -102,6 +104,7 @@ void Librarian::manageBook() {
     }
 }
 
+// Function to issue a book to a member
 void Librarian::issue_book(int member_id, int book_id) {
     Member* member = find_member(member_id);
     Book* book = find_book(book_id);
@@ -119,14 +122,9 @@ void Librarian::issue_book(int member_id, int book_id) {
         std::cout << "Book name: " <<  book->get_book_name() << std::endl;
         std::cout << "Book ID: " << book_id << std::endl;
 
-//        if (book->is_book_issued(*book) && book->borrower == member) {
-//            std::cout << "Error! Book with ID " << book_id << " is already issued to Member with ID " << member_id << ". Cannot issue the same book again." << std::endl;
-//            std::cout << "Returning to the main menu... " << std::endl;
-//            return;
-//        }
-
-        //pass a vector of a single book
+        // Add the book to the list of borrowed books for the member
         member->set_books_borrowed(book);
+        // Set the due date for the borrowed book
         book->borrow_book(member,due_date);
     } else {
         std::cout << "Error! Book with id " << book_id << " was not found. Please provide a valid book id. " << std::endl;
@@ -150,6 +148,7 @@ void Librarian::issue_book(int member_id, int book_id) {
     std::cout << "Returning to the main menu... " << std::endl;
 };
 
+// Function to return a book to the library
 void Librarian::return_book(int member_id, int book_id) {
     Member* member = find_member(member_id);
     Book* book = find_book(book_id);
@@ -168,6 +167,7 @@ void Librarian::return_book(int member_id, int book_id) {
         }
         std::cout << "Book with id " << book_id << " was found." << std::endl;
 
+        // Remove the book from the list of borrowed books for the member
         member->remove_borrowed_book(book);
         std::cout << "Book with id: " << book_id << " was returned." << std::endl;
 
@@ -179,7 +179,7 @@ void Librarian::return_book(int member_id, int book_id) {
         // Check if the book is returned late (more than 3 days)
         if (time_difference > 3 * 24 * 60 * 60) {
             std::cout << "Book is returned late. Calculating fine..." << std::endl;
-            //calc_fine(member_id);
+            calc_fine(member_id);
         } else {
             std::cout << "Book is returned on time. No fine is applied." << std::endl;
         }
@@ -188,6 +188,7 @@ void Librarian::return_book(int member_id, int book_id) {
     }
 };
 
+// Function to find a member by their ID
 Member* Librarian::find_member(int member_id){
     std::vector<Member>& members = Member::get_list_of_members();
 
@@ -199,6 +200,7 @@ Member* Librarian::find_member(int member_id){
     return nullptr; // we could not find a member
 }
 
+// Function to find a book by its ID
 Book* Librarian::find_book(int book_id) {
     std::vector<Book>& books = Book::get_list_of_books();
     for(auto& book : books){
@@ -209,6 +211,7 @@ Book* Librarian::find_book(int book_id) {
     return nullptr; // we could not find a book with provided id
 }
 
+// Function to display all books borrowed by a member
 void Librarian::display_borrowed_books(int member_id) {
     Member* member = find_member(member_id);
 
@@ -231,23 +234,54 @@ void Librarian::display_borrowed_books(int member_id) {
     }
 }
 
+// Function to calculate and display fines for overdue books
 void Librarian::calc_fine(int member_id) {
+    // Find the member with the given ID
+    Member* member = find_member(member_id);
+    // Check if the member exists
+    if (member != nullptr) {
+        // Get the list of books borrowed by the member
+        const std::vector<Book *> &borrowed_books = member->get_books_borrowed();
 
-};
+        // Iterate through each borrowed book
+        for (Book* book : borrowed_books) {
+            // Get the current time
+            std::time_t current_time = std::time(nullptr);
+            // Get the due date of the book
+            std::time_t due_date = book->get_due_date();
+            // Calculate the time difference between the current time and due date
+            std::time_t time_difference = current_time - due_date;
 
+            // Check if the book is returned late (more than 3 days overdue)
+            if (time_difference > 3 * 24 * 60 * 60) {
+                // Calculate the fine based on a rate of £1 per day overdue
+                int overdue_days = static_cast<int>(time_difference / (24 * 60 * 60));
+                // Display the fine information
+                int fine = overdue_days * 1; // Fine rate is £1 per day
+                std::cout << "Fine for overdue book (Book ID: " << book->get_book_id() << ") is £" << fine << "." << std::endl;
+            }
+        }
+    } else {
+        std::cout << "Error! Member with ID " << member_id << " was not found. Please provide a valid member ID. " << std::endl;
+    }
+}
 
+// Getter function for staff ID
 int Librarian::get_staff_id() {
     return staff_id;
 };
 
+// Getter function for salary
 int Librarian::get_salary() {
     return salary;
 };
 
+// Setter function for staff ID
 void Librarian::set_staff_id(int staff_id) {
     this->staff_id = staff_id;
 };
 
+// Setter function for salary
 void Librarian::set_salary(int salary) {
     this->salary = salary;
 }
