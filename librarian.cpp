@@ -30,8 +30,11 @@ void Librarian::add_member() {
     std::regex emailRegex(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
 
     std::cout << "Add member option was chosen." << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
+
     std::cout << "Please enter member's name: ";
     std::getline(std::cin, name);
+
     std::cout << "Please enter member's address: ";
     std::getline(std::cin, address);
 
@@ -50,6 +53,8 @@ void Librarian::add_member() {
     Member::get_list_of_members().push_back(member);
 
     std::cout << "New member was added: " << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
+
     print_member_details(MEMBER_ID);
 
     MEMBER_ID += 1;
@@ -65,10 +70,12 @@ void Librarian::print_member_details(int member_id) {
                 std::cout << "Name: " << member.getName() << std::endl;
                 std::cout << "Address: " << member.getAddress() << std::endl;
                 std::cout << "Email: " << member.getEmail() << std::endl;
-                return;
+                std::cout << "----------------------------------------" << std::endl;
+            return;
         }
     }
     std::cout << "Member with id " << member_id << " was not found." << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
 }
 
 // Function to manage book-related operations
@@ -78,6 +85,8 @@ void Librarian::manageBook() {
 
     std::cout << "If you would you like to issue a book to a member please enter 1. \n"
               << "If you would like to return a book please enter 2." << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
+
     char choice;
     std::cin >> choice;
 
@@ -110,6 +119,7 @@ void Librarian::issue_book(int member_id, int book_id) {
     Book* book = find_book(book_id);
     std::time_t due_date = std::time(nullptr) + 3 * 24 * 60 * 60; // 3 days in seconds
 
+    std::cout << "----------------------------------------" << std::endl;
     if (member != nullptr) {
         std::cout << "Member with id " << member_id << " was found." << std::endl;
     } else {
@@ -119,6 +129,7 @@ void Librarian::issue_book(int member_id, int book_id) {
 
     if (book != nullptr) {
         std::cout << "Book with id " << book_id << " was found." << std::endl;
+        std::cout << "----------------------------------------" << std::endl;
         std::cout << "Book name: " <<  book->get_book_name() << std::endl;
         std::cout << "Book ID: " << book_id << std::endl;
 
@@ -145,6 +156,7 @@ void Librarian::issue_book(int member_id, int book_id) {
     std::cout << std::put_time(std::localtime(&due_date), "%Y-%m-%d %H:%M:%S") << std::endl;
 
     std::cout << "Issuing book with ID " << book_id << " to member with ID " << member_id << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
     std::cout << "Returning to the main menu... " << std::endl;
 };
 
@@ -154,6 +166,8 @@ void Librarian::return_book(int member_id, int book_id) {
     Book* book = find_book(book_id);
     const std::vector<Book *> &borrowed_books = member->get_books_borrowed();
     auto specified_book = std::find(borrowed_books.begin(), borrowed_books.end(), book);
+
+    std::cout << "----------------------------------------" << std::endl;
 
     if (member != nullptr && book != nullptr) {
         std::cout << "Member with id " << member_id << " was found." << std::endl;
@@ -215,6 +229,8 @@ Book* Librarian::find_book(int book_id) {
 void Librarian::display_borrowed_books(int member_id) {
     Member* member = find_member(member_id);
 
+    std::cout << "----------------------------------------" << std::endl;
+
     if (member != nullptr) {
         std::vector<Book *> borrowed_books = member->get_books_borrowed();
         if(borrowed_books.empty()){
@@ -226,6 +242,7 @@ void Librarian::display_borrowed_books(int member_id) {
                 std::cout << "Book ID: " << book->get_book_id() << "\n";
                 std::cout << "Book Name: " << book->get_book_name() << "\n";
                 std::cout << "Author: " << book->get_author_first_name() << " " << book->get_author_last_name() << std::endl;
+                std::cout << "----------------------------------------" << std::endl;
                 std::cout << "\n";
             }
         }
@@ -238,6 +255,9 @@ void Librarian::display_borrowed_books(int member_id) {
 void Librarian::calc_fine(int member_id) {
     // Find the member with the given ID
     Member* member = find_member(member_id);
+
+    std::cout << "----------------------------------------" << std::endl;
+
     // Check if the member exists
     if (member != nullptr) {
         // Get the list of books borrowed by the member
