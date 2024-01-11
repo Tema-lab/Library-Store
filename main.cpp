@@ -90,7 +90,7 @@ int main() {
             std::cout << "Please choose one of the available options below: " << std::endl;
             std::cout << "Add Member (1) " << std::endl;
             std::cout << "Manage Book (2)" << std::endl;
-            std::cout << "Display All Books (3)" << std::endl;
+            std::cout << "Display All Books Borrowed by a member (3)" << std::endl;
             std::cout << "End Session (4)" << std::endl;
             std::cin >> choice;
             std::cin.ignore();
@@ -102,6 +102,12 @@ int main() {
                 case '2':
                     librarian.manageBook();
                     break;
+                case '3':
+                    int memberID;
+                    std::cout << "Please enter a member id: " << std::endl;
+                    std::cin >> memberID;
+                    librarian.display_borrowed_books(memberID);
+                    break;
                 case '4':
                     std::cout << "System Exiting" << std::endl;
                     exit(0);
@@ -111,7 +117,6 @@ int main() {
                     break;
             }
         }
-
     }else {
         std::cout << "Program stopped. " << std::endl;
     }

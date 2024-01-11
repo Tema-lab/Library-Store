@@ -13,12 +13,12 @@ int Member::get_member_id() const{
     return member_id;
 };
 
-std::vector<Book> Member::get_books_borrowed(){
+std::vector<Book *> &Member::get_books_borrowed(){
     return books_loaned;
 }
 
-void Member::set_books_borrowed(const std::vector<Book>& books) {
-    books_loaned = books;
+void Member::set_books_borrowed(Book *books) {
+   books_loaned.push_back(books);
 }
 //function which returns a reference to the vector of member objects
 std::vector<Member>& Member::get_list_of_members(){

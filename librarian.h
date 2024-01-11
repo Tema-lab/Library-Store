@@ -24,7 +24,7 @@ public:
     void print_member_details(int member_id);
     void manageBook();
     Member* find_member(int member_id);
-
+    Book* find_book(int book_id);
 };
 
 extern Librarian librarian;

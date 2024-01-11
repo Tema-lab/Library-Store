@@ -41,7 +41,6 @@ void Book::print_all_books() {
     }
 }
 
-
 std::time_t Book::get_due_date(){
     return due_date;
 };
