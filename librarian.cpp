@@ -38,14 +38,7 @@ void Librarian::add_member() {
     print_member_details(MEMBER_ID);
 
     MEMBER_ID += 1;
-
-    const std::vector<Member> &member_list = Member::get_list_of_members();
     std::cout << "Return to main menu..."<< std::endl;
-    std::cout << "All Members: " << std::endl;
-
-    for (const Member &m : member_list) {
-        std::cout << "Member ID: " << m.get_member_id() << ", Name: " << m.getName() << std::endl;
-    }
 };
 
 void Librarian::print_member_details(int member_id) {
@@ -56,16 +49,41 @@ void Librarian::print_member_details(int member_id) {
                 std::cout << "Name: " << member.getName() << std::endl;
                 std::cout << "Address: " << member.getAddress() << std::endl;
                 std::cout << "Email: " << member.getEmail() << std::endl;
-
-
                 return;
         }
     }
     std::cout << "Member with id " << member_id << " was not found." << std::endl;
 }
 
+void Librarian::manageBook(){
+    std::cout << "If you would you like to issue a book to a member please enter 1. \n"
+                     "If you would like to return a book please enter 2." << std::endl;
+    char choice;
+    std::cin >> choice;
+    switch (choice) {
+        case '1':
+            std::cout << "Issue a book to a member option was chosen. " << std::endl;
+            issue_book();
+            break;
+        case '2':
+            std::cout << "Return a book option was chosen." << std::endl;
+//            return_book();
+            break;
+        default:
+            std::cout << "Invalid input! Please provide a valid one." << std::endl;
+            break;
+    }
 
-void Librarian::issue_book(int member_id, int book_id) {};
+}
+void Librarian::issue_book(int member_id, int book_id) {
+    std::cout << "Please enter a member ID: " << std::endl;
+    std::cin >> member_id;
+    std::cout << "Please enter a book ID: " << std::endl;
+    std::cin >> member_id;
+};
+Member* Librarian::find_member(int member_id){
+
+}
 
 void Librarian::return_book(int member_id, int book_id) {};
 

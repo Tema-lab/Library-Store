@@ -22,6 +22,8 @@ public:
     void set_staff_id(int staff_id);
     void set_salary(int salary);
     void print_member_details(int member_id);
+    void manageBook();
+    Member* find_member(int member_id);
 
 };
 
