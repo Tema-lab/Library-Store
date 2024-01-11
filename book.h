@@ -16,6 +16,7 @@ private:
     std::string author_last_name;
     std::string book_type;
     std::time_t due_date;
+    bool is_issued;
     Member* borrower;
 
     static std::vector<Book> books;// variable to store all books
@@ -28,6 +29,8 @@ public:
     std::string get_author_last_name() const;
     std::time_t get_due_date();
 
+    bool is_book_issued(Book &book);
+    void set_book_issued(Book &book);
     void set_due_date(std::time_t due_date);
     void return_book();
     void borrow_book(Member* borrower,std::time_t due_date);

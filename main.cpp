@@ -85,7 +85,6 @@ int main() {
     if(askToContinue()){
         manage_getting_books_info();
         char choice;
-
         while(true){
             std::cout << "Please choose one of the available options below: " << std::endl;
             std::cout << "Add Member (1) " << std::endl;

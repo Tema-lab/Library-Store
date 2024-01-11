@@ -15,6 +15,7 @@ public:
     std::vector<Book *> &get_books_borrowed();
     void set_books_borrowed(Book *book);
     static std::vector<Member>& get_list_of_members();
+    void remove_borrowed_book(Book *book);
 };
 
 #endif //LIBRARY_STORE_MEMBER_H

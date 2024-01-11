@@ -3,6 +3,7 @@
 #include <ctime>
 #include <string>
 #include <limits>
+#include <regex>
 #include "librarian.h"
 #include "member.h"
 #include "book.h"
@@ -25,14 +26,22 @@ void Librarian::add_member() {
     std::string name;
     std::string address;
     std::string email;
+    std::regex emailRegex(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
 
     std::cout << "Add member option was chosen." << std::endl;
     std::cout << "Please enter member's name: ";
     std::getline(std::cin, name);
     std::cout << "Please enter member's address: ";
     std::getline(std::cin, address);
-    std::cout << "Please enter member's email: ";
-    std::getline(std::cin, email);
+    do {
+        std::cout << "Please enter member's email: ";
+        std::getline(std::cin, email);
+
+        if (!std::regex_match(email, emailRegex)) {
+            std::cout << "Invalid email format. Please enter a valid email address." << std::endl;
+        }
+    } while (!std::regex_match(email, emailRegex));
+
 
     Member member(MEMBER_ID,name,address,email);
 
@@ -80,9 +89,13 @@ void Librarian::manageBook() {
 
         case '2':
             std::cout << "Return a book option was chosen." << std::endl;
-            // return_book();
+            // Get member_id and book_id from the user and pass them to issue_book
+            std::cout << "Please enter a member id: " << std::endl;
+            std::cin >> member_id;
+            std::cout << "Please enter a book id that you wish to return: " << std::endl;
+            std::cin >> book_id;
+            return_book(member_id, book_id);
             break;
-
         default:
             std::cout << "Invalid input! Please provide a valid one." << std::endl;
             break;
@@ -105,6 +118,12 @@ void Librarian::issue_book(int member_id, int book_id) {
         std::cout << "Book with id " << book_id << " was found." << std::endl;
         std::cout << "Book name: " <<  book->get_book_name() << std::endl;
         std::cout << "Book ID: " << book_id << std::endl;
+
+//        if (book->is_book_issued(*book) && book->borrower == member) {
+//            std::cout << "Error! Book with ID " << book_id << " is already issued to Member with ID " << member_id << ". Cannot issue the same book again." << std::endl;
+//            std::cout << "Returning to the main menu... " << std::endl;
+//            return;
+//        }
 
         //pass a vector of a single book
         member->set_books_borrowed(book);
@@ -131,6 +150,44 @@ void Librarian::issue_book(int member_id, int book_id) {
     std::cout << "Returning to the main menu... " << std::endl;
 };
 
+void Librarian::return_book(int member_id, int book_id) {
+    Member* member = find_member(member_id);
+    Book* book = find_book(book_id);
+    const std::vector<Book *> &borrowed_books = member->get_books_borrowed();
+    auto specified_book = std::find(borrowed_books.begin(), borrowed_books.end(), book);
+
+    if (member != nullptr && book != nullptr) {
+        std::cout << "Member with id " << member_id << " was found." << std::endl;
+        if(member->get_books_borrowed().empty()){
+            std::cout << "Member with id " << member_id << " doesnt have any books borrowed" << std::endl;
+            return;
+        }
+        if (specified_book == borrowed_books.end()) {
+            std::cout << "Error! Member with id " << member_id << " hasn't borrowed the book with id " << book_id << "." << std::endl;
+            return;
+        }
+        std::cout << "Book with id " << book_id << " was found." << std::endl;
+
+        member->remove_borrowed_book(book);
+        std::cout << "Book with id: " << book_id << " was returned." << std::endl;
+
+        // Calculate the difference in seconds between due date and current date
+        std::time_t current_time = std::time(nullptr);
+        std::time_t due_date = book->get_due_date();
+        std::time_t time_difference = current_time - due_date;
+
+        // Check if the book is returned late (more than 3 days)
+        if (time_difference > 3 * 24 * 60 * 60) {
+            std::cout << "Book is returned late. Calculating fine..." << std::endl;
+            //calc_fine(member_id);
+        } else {
+            std::cout << "Book is returned on time. No fine is applied." << std::endl;
+        }
+    } else {
+        std::cout << "Error! Member or book not found. Please provide valid IDs." << std::endl;
+    }
+};
+
 Member* Librarian::find_member(int member_id){
     std::vector<Member>& members = Member::get_list_of_members();
 
@@ -151,10 +208,6 @@ Book* Librarian::find_book(int book_id) {
     }
     return nullptr; // we could not find a book with provided id
 }
-
-void Librarian::return_book(int member_id, int book_id) {
-
-};
 
 void Librarian::display_borrowed_books(int member_id) {
     Member* member = find_member(member_id);

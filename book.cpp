@@ -41,6 +41,16 @@ void Book::print_all_books() {
     }
 }
 
+bool Book::is_book_issued(Book &book) {
+    return book.is_issued;
+}
+
+void Book::set_book_issued(Book &book) {
+    if(book.is_book_issued(book)){
+        is_issued = true;
+    }
+}
+
 std::time_t Book::get_due_date(){
     return due_date;
 };
