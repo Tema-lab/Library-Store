@@ -1,20 +1,35 @@
-output: main.o person.o member.o librarian.o book.o
-	g++ $^ -o $@
+CXX = g++
+CXXFLAGS = -Wall -Wextra -Wpedantic
 
-main.o: main.cpp person.h member.h librarian.h book.h
-	g++ -c main.cpp
+all: ManagementSystem Catch2tests
+
+Catch2tests: test.cpp person.o book.o member.o librarian.o
+		$(CXX) $(CXXFLAGS) -o $@ $^
+
+ManagementSystem: main.o person.o book.o member.o librarian.o
+		$(CXX) $(CXXFLAGS) -o $@ $^
+
+main.o: main.cpp
+		$(CXX) $(CXXFLAGS) -c $<
 
 person.o: person.cpp person.h
-	g++ -c person.cpp
-
-member.o: member.cpp member.h person.h
-	g++ -c member.cpp
-
-librarian.o: librarian.cpp librarian.h person.h member.h
-	g++ -c librarian.cpp
+		$(CXX) $(CXXFLAGS) -c $<
 
 book.o: book.cpp book.h
-	g++ -c book.cpp
+		$(CXX) $(CXXFLAGS) -c $<
 
+member.o: member.cpp member.h
+		$(CXX) $(CXXFLAGS) -c $<
+
+librarian.o: librarian.cpp librarian.h
+		$(CXX) $(CXXFLAGS) -c $<
+
+.PHONY: clean
 clean:
-	rm *.o output
+		$(RM) *.o ManagementSystem Catch2tests
+
+
+
+
+
+

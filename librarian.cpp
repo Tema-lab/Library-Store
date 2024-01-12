@@ -20,7 +20,7 @@ Librarian::Librarian(int staff_id, std::string name, std::string address, std::s
     this->salary = salary;
 };
 
-Librarian librarian(113,"temoid","portnall road","nowayamgs78@gmail.com",85000);
+Librarian librarian(113,"Artem","Portnall Road","nowayamgs78@gmail.com",85000);
 
 // Function to add a member to the library
 void Librarian::add_member() {
@@ -218,7 +218,7 @@ Member* Librarian::find_member(int member_id){
 Book* Librarian::find_book(int book_id) {
     std::vector<Book>& books = Book::get_list_of_books();
     for(auto& book : books){
-        if(book.get_book_id() == std::to_string(book_id)){
+        if (std::stoi(book.get_book_id()) == book_id) { // Convert string to integer
             return &book;
         }
     }

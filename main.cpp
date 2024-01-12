@@ -67,7 +67,6 @@ void manage_getting_books_info() {
         std::string author_first_name;
         std::string author_last_name;
         std::string book_type;
-        std::time_t due_date;
         std::string tmp_line; // temporary string to help divide headers in book data file
 
         std::stringstream input_str(book_line);
