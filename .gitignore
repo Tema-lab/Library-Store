@@ -1,0 +1,9 @@
+# Ignore build artifacts
+build/
+cmake-build-debug/
+cmake-build-mingw/
+
+# Ignore generated files
+*.exe
+*.out
+*.o
