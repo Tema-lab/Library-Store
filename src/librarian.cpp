@@ -154,6 +154,7 @@ void Librarian::manageBook() {
 void Librarian::issue_book(int member_id, int book_id) {
     Member* member = find_member(member_id);
     Book* book = find_book(book_id);
+
     std::time_t due_date = std::time(nullptr) + 3 * 24 * 60 * 60; // 3 days in seconds
 
     std::cout << "----------------------------------------" << std::endl;

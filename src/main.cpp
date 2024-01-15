@@ -129,6 +129,7 @@ int get_valid_member_id(){
     }
     return memberID;
 }
+
 int main() {
     if(askToContinue()){
         manage_getting_books_info();
@@ -179,7 +180,6 @@ int main() {
                     librarian.display_borrowed_books(member_id);
                     break;
                 }
-
                 case MenuOption::END_SESSION:{
                     std::cout << "----------------------------------------" << std::endl;
                     std::cout << "Thank you for using our system!\nSee you again!" << std::endl;
