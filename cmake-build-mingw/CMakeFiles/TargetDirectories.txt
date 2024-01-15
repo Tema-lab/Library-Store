@@ -1,3 +1,0 @@
-D:/Uni/CST2550/CST2550/library-store/cmake-build-mingw/CMakeFiles/library_store.dir
-D:/Uni/CST2550/CST2550/library-store/cmake-build-mingw/CMakeFiles/edit_cache.dir
-D:/Uni/CST2550/CST2550/library-store/cmake-build-mingw/CMakeFiles/rebuild_cache.dir

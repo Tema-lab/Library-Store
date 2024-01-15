@@ -1,3 +1,0 @@
-D:/Uni/CST2550/CST2550/library-store/cmake-build-debug/CMakeFiles/library_store.dir
-D:/Uni/CST2550/CST2550/library-store/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Uni/CST2550/CST2550/library-store/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,1 +1,0 @@
-CMakeLists.txt not found in C:\Users\Artem Galis\Desktop\cst2550\Library-Store Select CMakeLists.txt
