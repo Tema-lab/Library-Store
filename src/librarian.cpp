@@ -328,7 +328,6 @@ void Librarian::calc_fine(int member_id) {
         std::cout << "Error! Member with ID " << member_id << " was not found. Please provide a valid member ID. " << std::endl;
     }
 }
-
 // Getter function for staff ID
 int Librarian::get_staff_id() {
     return staff_id;
