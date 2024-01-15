@@ -29,19 +29,23 @@ void Librarian::add_member() {
     std::string email;
     std::regex emailRegex(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
 
+    std::cout << "----------------------------------------" << std::endl;
     std::cout << "Add member option was chosen." << std::endl;
     std::cout << "----------------------------------------" << std::endl;
 
     std::cout << "Please enter member's name: ";
     std::getline(std::cin, name);
+    std::cout << "----------------------------------------" << std::endl;
 
     std::cout << "Please enter member's address: ";
     std::getline(std::cin, address);
+    std::cout << "----------------------------------------" << std::endl;
 
     // Validate and obtain a valid email address
     do {
         std::cout << "Please enter member's email: ";
         std::getline(std::cin, email);
+        std::cout << "----------------------------------------" << std::endl;
 
         if (!std::regex_match(email, emailRegex)) {
             std::cout << "Invalid email format. Please enter a valid email address." << std::endl;
@@ -84,15 +88,24 @@ void Librarian::manageBook() {
     int member_id;
     int book_id;
 
+    std::cout << "----------------------------------------" << std::endl;
     std::cout << "If you would you like to issue a book to a member please enter 1. \n"
               << "If you would like to return a book please enter 2." << std::endl;
     std::cout << "----------------------------------------" << std::endl;
 
     char choice;
-    std::cin >> choice;
+    while (!(std::cin >> choice) || (choice != '1' && choice != '2') || std::cin.peek() != '\n') {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid input. Please enter 1 or 2: ";
+    }
 
     switch (choice) {
         case '1':
+            std::cout << "----------------------------------------" << std::endl;
+            std::cout << "Issue a book option was chosen." << std::endl;
+            std::cout << "----------------------------------------" << std::endl;
+
             std::cout << "Please enter a member ID: ";
             // Validate and get a valid member_id
             while (!(std::cin >> member_id) || std::cin.peek() != '\n') {
@@ -111,7 +124,9 @@ void Librarian::manageBook() {
             break;
 
         case '2':
+            std::cout << "----------------------------------------" << std::endl;
             std::cout << "Return a book option was chosen." << std::endl;
+            std::cout << "----------------------------------------" << std::endl;
             std::cout << "Please enter a member ID: ";
             while (!(std::cin >> member_id) || std::cin.peek() != '\n') {
                 std::cin.clear();
@@ -128,6 +143,9 @@ void Librarian::manageBook() {
             break;
         default:
             std::cout << "Invalid input! Please provide a valid one." << std::endl;
+            std::cout << "----------------------------------------" << std::endl;
+            std::cout << "Return to main menu..."<< std::endl;
+            std::cout << "----------------------------------------" << std::endl;
             break;
     }
 }
@@ -143,6 +161,7 @@ void Librarian::issue_book(int member_id, int book_id) {
         std::cout << "Member with id " << member_id << " was found." << std::endl;
     } else {
         std::cout << "Error! Member with id " << member_id << " was not found. Please provide a valid member id. " << std::endl;
+        std::cout << "----------------------------------------" << std::endl;
         return;
     }
 
@@ -198,7 +217,9 @@ void Librarian::return_book(int member_id, int book_id) {
             return;
         }
         if (specified_book == borrowed_books.end()) {
+            std::cout << "----------------------------------------" << std::endl;
             std::cout << "Error! Member with id " << member_id << " hasn't borrowed the book with id " << book_id << "." << std::endl;
+            std::cout << "----------------------------------------" << std::endl;
             return;
         }
         std::cout << "Book with id " << book_id << " was found." << std::endl;
@@ -253,9 +274,7 @@ Book* Librarian::find_book(int book_id) {
 // Function to display all books borrowed by a member
 void Librarian::display_borrowed_books(int member_id) {
     Member* member = find_member(member_id);
-
     std::cout << "----------------------------------------" << std::endl;
-
     if (member != nullptr) {
         std::vector<Book *> borrowed_books = member->get_books_borrowed();
         if(borrowed_books.empty()){
@@ -272,6 +291,7 @@ void Librarian::display_borrowed_books(int member_id) {
         }
     } else {
         std::cout << "Error! Member with ID " << member_id << " was not found. Please provide a valid member ID. " << std::endl;
+        std::cout << "----------------------------------------" << std::endl;
     }
 }
 
@@ -279,9 +299,7 @@ void Librarian::display_borrowed_books(int member_id) {
 void Librarian::calc_fine(int member_id) {
     // Find the member with the given ID
     Member* member = find_member(member_id);
-
     std::cout << "----------------------------------------" << std::endl;
-
     // Check if the member exists
     if (member != nullptr) {
         // Get the list of books borrowed by the member

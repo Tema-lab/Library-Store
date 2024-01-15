@@ -9,13 +9,16 @@
 #include "book.h"
 #include "librarian.h"
 #include "member.h"
+#include "enums.h"
 
 // Function to prompt the user if they want to continue or stop the program
 bool askToContinue() {
     std::string userInput;
 
     while (true) {
+        std::cout << "----------------------------------------" << std::endl;
         std::cout << "Welcome to library management system." << std::endl;
+        std::cout << "----------------------------------------" << std::endl;
         std::cout << "Press Y to continue or N to stop the program (Y/N): ";
 
         std::getline(std::cin, userInput);
@@ -37,8 +40,10 @@ void manage_getting_books_info() {
 
     // Loop until a valid book data file is found
     while (!is_data_book_file_found) {
+        std::cout << "----------------------------------------" << std::endl;
         std::cout << "Please enter the file that contains book data:\n"
                      "(e.g.) library_books.csv " << std::endl;
+        std::cout << "----------------------------------------" << std::endl;
         std::getline(std::cin, filename);
 
         if (filename == "library_books.csv") {
@@ -84,40 +89,105 @@ void manage_getting_books_info() {
         Book new_book(book_id, book_name, author_first_name, author_last_name);
         Book::get_list_of_books().push_back(new_book);
     }
-    std::cout << "\nBooks added successfully!" << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
+    std::cout << "Books added successfully!" << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
+    std::cout << " " << std::endl;
+}
+
+int get_valid_member_id(){
+    int memberID;
+    bool is_found = false;
+    std::string input;
+
+    std::cout << "Please enter a member id: " << std::endl;
+
+    while (!is_found) {
+        bool invalid_input = false;
+        std::cin >> input;
+
+        try {
+            size_t pos;
+            memberID = std::stoi(input, &pos);
+
+            // Check if no extra characters after the number exist
+            if (pos == input.size()) {
+                is_found = true; // Exit the loop if a valid integer is entered
+            } else {
+                invalid_input = true;
+            }
+        } catch (const std::invalid_argument& e) {
+            invalid_input = true;
+        } catch (const std::out_of_range& e) {
+            invalid_input = true;
+        }
+        if (invalid_input) {
+            std::cout << "Invalid input. Please enter a valid member ID (number):" << std::endl;
+
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+    return memberID;
 }
 int main() {
     if(askToContinue()){
         manage_getting_books_info();
-        char choice;
+
         while(true){
             // Display menu and perform actions based on user input
-
+            std::cout << "===============================" << std::endl;
+            std::cout << "      Library Management      " << std::endl;
+            std::cout << "===============================" << std::endl;
             std::cout << "Please choose one of the available options below: " << std::endl;
             std::cout << "Add Member (1) " << std::endl;
             std::cout << "Manage Book (2)" << std::endl;
-            std::cout << "Display All Books Borrowed by a member (3)" << std::endl;
+            std::cout << "Display All Books Borrowed by a Member (3)" << std::endl;
             std::cout << "End Session (4)" << std::endl;
-            std::cin >> choice;
+
+            int intChoice;
+            std::cin >> intChoice;
+            MenuOption choice = static_cast<MenuOption>(intChoice);
+
+            if (std::cin.fail()) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "----------------------------------------" << std::endl;
+                std::cout << "Invalid input. Please enter a valid numeric option." << std::endl;
+                std::cout << "----------------------------------------" << std::endl;
+                continue;
+            }
             std::cin.ignore();
 
             switch (choice) {
-                case '1':
+                case MenuOption::ADD_MEMBER:{
                     librarian.add_member();
                     break;
-                case '2':
+                }
+                case MenuOption::MANAGE_BOOK:
+                {
+                    std::cout << "----------------------------------------" << std::endl;
+                    std::cout << "Manage book option was chosen." << std::endl;
+                    std::cout << "----------------------------------------" << std::endl;
                     librarian.manageBook();
                     break;
-                case '3':
-                    int memberID;
-                    std::cout << "Please enter a member id: " << std::endl;
-                    std::cin >> memberID;
-                    librarian.display_borrowed_books(memberID);
+                }
+                case MenuOption::DISPLAY_BOOKS_BORROWED: {
+                    std::cout << "----------------------------------------" << std::endl;
+                    std::cout << "Display books borrowed by member option was chosen." << std::endl;
+                    std::cout << "----------------------------------------" << std::endl;
+                    int member_id = get_valid_member_id();
+                    librarian.display_borrowed_books(member_id);
                     break;
-                case '4':
-                    std::cout << "System Exiting" << std::endl;
+                }
+
+                case MenuOption::END_SESSION:{
+                    std::cout << "----------------------------------------" << std::endl;
+                    std::cout << "Thank you for using our system!\nSee you again!" << std::endl;
+                    std::cout << "----------------------------------------" << std::endl;
                     exit(0);
                     break;
+                }
                 default:
                     std::cout << "Invalid choice. Please choose a valid option." << std::endl;
                     break;
